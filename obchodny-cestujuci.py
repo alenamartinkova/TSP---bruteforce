@@ -1,6 +1,5 @@
 from typing import List
 from itertools import permutations
-from sys import maxsize
 from threading import Thread
 from Coordinate import Coordinate
 
@@ -20,14 +19,13 @@ def calculate_combinations(list_of_coords: list, recursive_list: list, final_com
 
 
 def calculate_distance(comb: List[Coordinate], result: List) -> float:
-    distance_sum = 0
-    print(comb)
-    print('----------')
-    #for i in range(len(comb) - 1):
-        #distance = comb[i].distance(comb[i + 1])
-        #distance_sum += distance
+    for one_comb in comb:
+        distance_sum = 0
 
-    result.append(distance_sum)
+        for i in range(len(one_comb) - 1):
+            distance_sum += one_comb[i].distance(one_comb[i + 1])
+
+        result.append(distance_sum)
 
 
 coords_list = []
@@ -44,7 +42,7 @@ iterable_all_combinations = list(all_combinations)
 
 thread_list = []
 result = []
-number_of_threads = 8
+number_of_threads = 4
 
 for thread in range(number_of_threads):
     data_for_thread = []
@@ -57,14 +55,8 @@ for thread in range(number_of_threads):
     thread_var.start()
     thread_list.append(thread_var)
 
-exit()
 for thread in thread_list:
     thread.join()
 
-#print(result)
-
-
-for x in all_combinations:
-    x = (*x, x[0])
-    min_distance = min(min_distance, calculate_distance(x))
-    print(f"{x}: distance = {calculate_distance(x)}")
+min_result = min(result)
+print(min_result)
