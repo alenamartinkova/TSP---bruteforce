@@ -22,10 +22,10 @@ def calculate_combinations(list_of_coords: list, recursive_list: list, final_com
 def calculate_distance(comb: List[Coordinate], result: List) -> float:
     distance_sum = 0
     print(comb)
-    exit()
-    for i in range(len(comb) - 1):
-        distance = comb[i].distance(comb[i + 1])
-        distance_sum += distance
+    print('----------')
+    #for i in range(len(comb) - 1):
+        #distance = comb[i].distance(comb[i + 1])
+        #distance_sum += distance
 
     result.append(distance_sum)
 
@@ -38,30 +38,31 @@ with open("/Users/alenamartinkova/Desktop/School/Ing./2. rok/PA/data.txt") as f:
         _, number, x, y = line.split(" ")
         coords_list.append(Coordinate(float(x), float(y)))
 
-coords_list = coords_list[:4]
+coords_list = coords_list[:10]
 all_combinations = permutations(coords_list)
+iterable_all_combinations = list(all_combinations)
 
-threads_count = 8
 thread_list = []
-data_for_thread = []
 result = []
+number_of_threads = 8
 
-for thread in range(threads_count):
+for thread in range(number_of_threads):
     data_for_thread = []
 
-    for index, x in enumerate(all_combinations):
-        if index % threads_count == thread:
+    for index, x in enumerate(iterable_all_combinations):
+        if index % number_of_threads == thread:
             data_for_thread.append((*x, x[0]))
 
     thread_var = Thread(args=(data_for_thread, result), target=calculate_distance)
     thread_var.start()
     thread_list.append(thread_var)
 
+exit()
 for thread in thread_list:
     thread.join()
 
 #print(result)
-exit()
+
 
 for x in all_combinations:
     x = (*x, x[0])
