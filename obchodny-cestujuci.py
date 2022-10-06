@@ -29,7 +29,7 @@ def calculate_distance(comb: List[Coordinate], result: List) -> float:
 
 
 coords_list = []
-with open("/Users/alenamartinkova/Desktop/School/Ing./2. rok/PA/data.txt") as f:
+with open("/Users/alenamartinkova/Desktop/School/Ing./2. rok/PA/TSP/data.txt") as f:
     lines_after_7 = list(f.readlines())[7:]
 
     for line in lines_after_7:
